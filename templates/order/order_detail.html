@@ -1,0 +1,43 @@
+{% extends 'base/base_main.html' %}
+
+{% load staticfiles %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'axf/order/css/order.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div id="cart">
+        <h3>订单编号{{ order.id }}</h3>
+        <section>
+        <div class="full">
+            <menu>
+                <ul>
+                    {% for i in order.orderitem_set.all %}
+                       <li class="menuList">
+                           <a>
+                                <img src="{{ i.goods.proudctimg }}">
+                                <p>{{ i.goods.productlongname }}</p>
+                                <p>￥{{ i.goods.price }}</p>
+                            </a>
+                            <section>
+                                <span>
+                                    {{ i.num }}
+                                </span>
+                            </section>
+                       </li>
+                     {% empty %}
+                        <h3>暂无商品，<a href="{% url 'axf:market' %}">购物</a></h3>
+                    {% endfor %}
+                </ul>
+            </menu>
+            <div class="payTheBill">
+                <p>共计{{ sum_money }}</p>
+                <span>确认付款</span>
+            </div>
+        </div>
+        </section>
+    </div>
+{% endblock %}
+
